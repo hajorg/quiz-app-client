@@ -1,14 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './styles/style.css';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props)
-  }
+const App = () => (
+  <h1>Hello World!</h1>
+);
 
-  render() {
-    return (
-      <h1>Hello world!</h1>
-    );
-  }
-}
+export default App;

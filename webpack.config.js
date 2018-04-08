@@ -2,19 +2,22 @@ const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
+const isDev = process.env.NODE_ENV === 'development'
+
 module.exports = {
-  entry: {
-    app: './client/index.js'
-  },
   devServer: {
     hot: true
   },
-  devtool: 'inline-source-map',
+  devtool: isDev ? 'inline-source-map': '',
+  entry: {
+    app: './client/index.js'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.join(__dirname, 'client', 'dist'),
     publicPath: '/'
   },
+  mode: isDev ? 'development' : 'production',
   module: {
     rules: [
       {
@@ -32,10 +35,12 @@ module.exports = {
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: './client/index.html',
-      filename: 'index.html'
+      template: './client/index.html'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+  }
 }
