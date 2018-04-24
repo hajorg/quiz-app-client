@@ -1,12 +1,13 @@
-const path = require('path')
+const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   devServer: {
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   devtool: isDev ? 'inline-source-map': '',
   entry: {
@@ -43,4 +44,4 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   }
-}
+};
