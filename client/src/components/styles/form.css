@@ -1,0 +1,45 @@
+.ui.card {
+  margin: auto;
+  margin-top: 200px;
+  background: #0A0635;
+  padding: 50px;
+  width: 600px;
+}
+
+.ui.card:first-child {
+  margin-top: 100px;
+}
+
+.ui.card>:first-child {
+  color: #FFF;
+  text-align: center;
+}
+
+.ui .form .field input, .ui .form .field input:focus {
+  color: #FFF;
+  background: #0A0635;
+  border-radius: 0;
+  border-right: 0;
+  border-left: 0;
+  border-top: 0;
+  border-bottom: 1px solid #D0A1A2;
+}
+
+.ui .form button {
+  width: 100%;
+  background: #D0A1A2;
+  border-radius: 50px;
+  text-transform: uppercase;
+  color: #FDFDFC;
+  font-weight: 100;
+  margin-top: 20px;
+}
+
+.ui .form button:hover {
+  background: #B27A87;
+  color: #FDFDFC;
+}
+
+.ui.icon.input>i.icon {
+  color: #FFF;
+}

@@ -1,5 +1,6 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -23,7 +24,10 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       },
       {
         test: /\.(js|jsx)$/,
@@ -39,7 +43,8 @@ module.exports = {
       template: './client/index.html'
     }),
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('styles.css')
   ],
   resolve: {
     extensions: ['.js', '.jsx']
