@@ -1,12 +1,15 @@
-const path = require('path')
+require('dotenv').config();
+const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   devServer: {
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   devtool: isDev ? 'inline-source-map': '',
   entry: {
@@ -22,7 +25,10 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       },
       {
         test: /\.(js|jsx)$/,
@@ -38,9 +44,13 @@ module.exports = {
       template: './client/index.html'
     }),
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('styles.css'),
+    new webpack.DefinePlugin({
+      API_URL: JSON.stringify(process.env.API_URL)
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx']
   }
-}
+};

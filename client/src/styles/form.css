@@ -1,0 +1,68 @@
+.ui.card {
+  margin: auto;
+  margin-top: 200px;
+  background: #0A0635;
+  padding: 50px;
+  width: 600px;
+}
+
+.ui.card:first-child {
+  margin-top: 100px;
+}
+
+.ui.card>:first-child {
+  color: #FFF;
+  text-align: center;
+}
+
+.ui .form .field input, .ui .form .field input:focus {
+  color: #FFF;
+  background: #0A0635;
+  border-radius: 0;
+  border-right: 0;
+  border-left: 0;
+  border-top: 0;
+  border-bottom: 1px solid #D0A1A2;
+}
+
+.ui.form .field.error input[type=email], .ui.form .field.error input:focus[type=email],
+.ui.form .field.error input[type=text], .ui.form .field.error input:focus[type=text],
+.ui.form .field.error input[type=password], .ui.form .field.error input:focus[type=password] {
+  background: #0A0635;
+}
+
+.ui .form button, .ui .form button:active, .ui .form button:focus {
+  width: 100%;
+  background: #D0A1A2;
+  border-radius: 50px;
+  text-transform: uppercase;
+  color: #FDFDFC;
+  font-weight: 100;
+  margin-top: 20px;
+}
+
+.ui .form button:hover {
+  background: #B27A87;
+  color: #FDFDFC;
+}
+
+.ui.icon.input>i.icon {
+  color: #FFF;
+}
+
+.fieldError {
+  color: #F00;
+  margin-left: 40px;
+}
+
+.ui.form .field.field input:-webkit-autofill {
+  box-shadow: 0 0 0 100px #0A0635 inset!important;
+  border-color: #D0A1A2!important;
+  -webkit-text-fill-color: #FFF;
+}
+
+.ui.form .field.field input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 100px #0A0635 inset!important;
+  border-color: #D0A1A2!important;
+  -webkit-text-fill-color: #FFF;
+}
