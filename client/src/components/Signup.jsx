@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { Button, Card, Form, Input } from 'semantic-ui-react';
 
 import validateUserInput from '../utils/validations/signup';
-import auth from '../actions/auth';
-import { SIGNUP_SUCCESS } from '../actions/constants';
 import '../styles/form.css';
 
 /**
@@ -72,15 +68,34 @@ class SignUpForm extends Component {
       return;
     }
 
-    this.props.signUpRequest(JSON.stringify({
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password
-    }))
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    fetch(`${API_URL}/api/v1/user`, {
+      headers,
+      method: 'POST',
+      body: JSON.stringify({
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password
+      })
+    })
+      .then(result => result.json())
       .then((data) => {
-        if (data.type === SIGNUP_SUCCESS) {
+        if (data.token) {
+          localStorage.setItem('token', data.token);
           this.props.history.push('/');
+          return;
         }
+        this.setState({
+          serverError: data.error
+        });
+      })
+      .catch(() => {
+        this.setState({
+          serverError: 'Sorry, an error occurred! :('
+        });
       });
   }
 
@@ -98,7 +113,7 @@ class SignUpForm extends Component {
         </Card.Header>
         <Card.Content>
           <Form>
-            <div className="fieldError" style={{ marginBottom: '20px' }}>{ this.props.serverError }</div>
+            <div className="fieldError" style={{ marginBottom: '20px' }}>{ this.state.serverError }</div>
 
             <Form.Field control={Input} icon="user" iconPosition="left" type="text" placeholder="Username" onChange={this.onChange} id="username" error={this.state.usernameError} />
             {
@@ -132,28 +147,4 @@ class SignUpForm extends Component {
   }
 }
 
-SignUpForm.propTypes = {
-  serverError: PropTypes.string,
-  history: PropTypes.object.isRequired,
-  signUpRequest: PropTypes.func
-};
-
-SignUpForm.defaultProps = {
-  serverError: '',
-  signUpRequest: () => {}
-};
-
-const mapStateToProps = state => ({
-  serverError: state.users.error,
-  data: state.users.data
-});
-
-const mapDispatchToProps = dispatch => ({
-  errorOccurred: error => dispatch(auth.signup(error)),
-  signUpRequest: data => auth(dispatch, data)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUpForm);
+export default SignUpForm;
